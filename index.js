@@ -25,17 +25,13 @@ class CountdownTimer {
            if (deltaTime <= 0) {
                this.stop()
            }
-
             this.updateClock(deltaTime);
         }, 1000)
     }
 
     stop() {
         clearInterval(this.intervalId);
-        refs.days.textContent = '';
-        refs.hours.textContent = '';
-        refs.mins.textContent = '';
-        refs.secs.textContent = '';
+     this.setTextContent('', '', '', '');
     }
 
     updateClock(time) {
@@ -43,17 +39,28 @@ class CountdownTimer {
         const hours = this.pad(Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
         const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
         const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-        refs.days.textContent = `${days}`;
-        refs.hours.textContent = `${hours}`;
-        refs.mins.textContent = `${mins}`;
-        refs.secs.textContent = `${secs}`;
+        this.setTextContent(days, hours, mins, secs)
     }
+
+    setTextContent(days, hours, mins, secs) {
+        refs.days.textContent = days;
+        refs.hours.textContent = hours;
+        refs.mins.textContent = mins;
+        refs.secs.textContent = secs;  
+    } 
 
     pad(value) {
         return String(value).padStart(2, '0')
     }
 }
 
+// function setTextContent(days, hours, mins, secs) {
+//         refs.days.textContent = days;
+//         refs.hours.textContent = hours;
+//         refs.mins.textContent = mins;
+//         refs.secs.textContent = secs;  
+//     } 
+  
 const timer = new CountdownTimer({
     selector: '#timer-1',
     targetDate: new Date('Mar 01, 2021'),
